@@ -4,4 +4,4 @@ if kuhan_pituus < 37:
     puuttuu = 37 - kuhan_pituus
     print("Laske kuha takaisin järveen! Puuttuu", puuttuu, "senttiä alimmasta sallitusta pyyntimitasta.")
 else:
-    print("Kuha on sallitun mittainen. Hyvää kalastusta!")
+    print("Kuha ei ole soppi.!")

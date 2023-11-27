@@ -7,7 +7,8 @@ while n!= Arvaus:
         Arvaus =int(input('Anna luku taas: '))
     elif Arvaus > n:
         print('liian suuri arvaus!')
+        Arvaus = int(input('Anna luku tass.'))
+
     else:
         break
 print('Sinä olet oikkein!!')
-
