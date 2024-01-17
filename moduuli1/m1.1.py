@@ -1,2 +1,2 @@
 print('hiPyCharm')
-print("Hei, Maza!")
+print("Hei, kaaed!")
