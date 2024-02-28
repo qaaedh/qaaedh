@@ -1,22 +1,33 @@
-import sqlite3
+import mysql.connector
 
-def hae_lentoaseman_tiedot(icao):
-    conn = sqlite3.connect('lentokentatietokanta.db')
-    c = conn.cursor()
+try:
+  connection = mysql.connector.connect(
+      host="127.0.0.1",
+      port=3306,
+      user="root",
+      password="12345",
+      database="flight_game",
+      autocommit=True
+  )
 
-    c.execute("SELECT name FROM airport WHERE ident=?", (icao,))
-    lentoasema = c.fetchone()
+  icao_input = input('Hae lentokenttää ICAO-koodilla: ')
 
-    conn.close()
+  if connection.is_connected():
+      print("Connected to the database")
+  cursor = connection.cursor()
 
-    if lentoasema is not None:
-        print("Lentoaseman nimi: " + lentoasema[0])
-        print("Sijaintikunta: " + lentoasema[1])
-    else:
-        print("Lentoasemaa ei löytynyt.")
 
-def main():
-    icao = input("Syötä lentoaseman ICAO-koodi: ")
-    hae_lentoaseman_tiedot(icao)
+  cursor.execute(f"SELECT * FROM airport WHERE ident = '{icao_input}';")
+  results = cursor.fetchall()
 
-main()
+  # Print the results
+  print(f"Haettu lentokenttä: \n {results}")
+
+  # for row in results:
+  #     print(row)
+  # cursor.close()
+
+  connection.close()
+  print("Connection closed")
+except mysql.connector.Error as e:
+  print("Error:", e)
