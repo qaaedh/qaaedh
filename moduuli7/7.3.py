@@ -1,32 +1,38 @@
-def lisaa_lentoasema(lentoasemat):
-    icao = input("Syötä lentoaseman ICAO-koodi: ")
-    nimi = input("Syötä lentoaseman nimi: ")
-    lentoasemat[icao] = nimi
-    print("Lentoasema lisätty onnistuneesti.")
+lentoasemat = {"EFHK" : "helsinki-vantaa lentoasema",
+               "EFHF":"helsinki-malmi lentoasema",
+               "EFTP":"Tampere lentoasema",
+               "EFTU":"Turku lentoasema",
+               "EFFO":"forssa lentoasema"}
+while True:
+    päätös = input("""
+uusi lentoasema: 
+hakea lentoasema: 
+lopeta: 
+  """)
+    if päätös == "uusi":
+      koodi = input("Anna ICAO-koodi: ")
+      kenttä = input("Anna lentoasema: ")
+      if koodi in lentoasemat:
+       print("koodi on jo olemassa. ")
+      else:
+       lentoasemat[koodi] = kenttä
+       print("uusi lentokenttä lisätty!")
 
-def hae_lentoasema(lentoasemat):
-    icao = input("Syötä lentoaseman ICAO-koodi: ")
-    if icao in lentoasemat:
-        print("Lentoaseman nimi: " + lentoasemat[icao])
+
+    elif päätös == "hakea":
+        koodi = input("Anna ICAO-koodi: ")
+        if koodi in lentoasemat:
+         print(f"ICAO-koodi {koodi} on {lentoasemat[koodi]}")
+        if koodi not in lentoasemat:
+         print("valitettavasti, koodi ei löytää, yritä uudelleen tai lisää sitä. ")
+         päätös = input("""
+uusi lentoasema: 
+hakea lentoasema: 
+lopeta: 
+""")
+    elif päätös == "lopeta":
+        break
     else:
-        print("Lentoasemaa ei löytynyt.")
+        print("Anteeksi, en ymmärtää mitä haluat, yritä uudelleen")
 
-def main():
-    lentoasemat = {}
-    while True:
-        print("Valitse toiminto:")
-        print("1. Lisää uusi lentoasema")
-        print("2. Hae lentoaseman tiedot")
-        print("3. Lopeta")
-        valinta = input("Valintasi: ")
-
-        if valinta == "1":
-            lisaa_lentoasema(lentoasemat)
-        elif valinta == "2":
-            hae_lentoasema(lentoasemat)
-        elif valinta == "3":
-            break
-        else:
-            print("Virheellinen valinta. Yritä uudelleen.")
-
-main()
+print("lopettaa")
