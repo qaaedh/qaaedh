@@ -26,7 +26,7 @@ class Talo:
                 hissi.aja_alas()
 
 talon_hisseilla = Talo(0, 10, 2)
-talon_hisseilla.ajaiset_hissiä(0, 5)
-talon_hisseilla.ajaiset_hissiä(1, 3)
+#talon_hisseilla.ajaiset_hissiä(0, 5)
+#talon_hisseilla.ajaiset_hissiä(1, 3)
 print("Hissi 0 on nyt kerroksessa", talon_hisseilla.hisset[0].kerros)
 print("Hissi 1 on nyt kerroksessa", talon_hisseilla.hisset[1].kerros)

@@ -24,4 +24,4 @@ auto_poltto = Polttomoottoriauto("ACD-123", 165, 32.3)
 
 auto_sahko.ajamaan(180)
 print()
-auto_poltto.ajamaan(180)
+auto_poltto.ajamaan(150)
