@@ -1,20 +1,21 @@
-from flask import Flask, jsonify, request
-import math
-
+from flask import Flask, request
 app = Flask(__name__)
+def is_prime(luku):
+    if luku > 1:
+        for i in range(2, int(luku)):
+            if (luku % i) == 0:
+                return False
+        return True
+    else:
+        return False
 
-@app.route('/alkuluku/<int:number>', methods=['GET'])
-def is_prime(number):
-    if number < 2:
-        return jsonify({"Number": number, "isPrime": False})
-    if number == 2:
-        return jsonify({"Number": number, "isPrime": True})
-    if number % 2 == 0:
-        return jsonify({"Number": number, "isPrime": False})
-    for i in range(3, math.isqrt(number) + 1, 2):
-        if number % i == 0:
-            return jsonify({"Number": number, "isPrime": False})
-    return jsonify({"Number": number, "isPrime": True})
-
+@app.route('/alkuluku')
+def alkuluku():
+    args=request.args
+    luku = float(args.get("luku"))
+    if is_prime(luku):
+        return f"{luku} is a prime number."
+    else:
+        return f"{luku} is not a prime number."
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(use_reloader=True, host='127.0.0.1', port=3000)

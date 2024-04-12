@@ -1,27 +1,40 @@
 class Auto:
-    def __init__(self, rekisterinumero, huippunopeus):
-        self.rekisterinumero = rekisterinumero
+    def __init__(self, rekisteritunnus, huippunopeus):
+        self.rekisteritunnus = rekisteritunnus
         self.huippunopeus = huippunopeus
+        self.matkamittari = 0
 
-    def ajamaan(self, aika):
-        etaisyys = self.huippunopeus * aika
-        print("Ajaa {} minuuttia, matkaa yhteensä {} km.".format(aika, etaisyys))
-        return etaisyys
+    def aja(self, tuntimaara):
+        self.matkamittari += self.huippunopeus * tuntimaara
 
-class Sahkoauto(Auto):
-    def __init__(self, rekisterinumero, huippunopeus, akkukapasiteetti):
-        super().__init__(rekisterinumero, huippunopeus)
+class Sähköauto(Auto):
+    def __init__(self, rekisteritunnus, huippunopeus, akkukapasiteetti):
+        super().__init__(rekisteritunnus, huippunopeus)
+        self.akkukapasiteetti = akkukapasiteetti
+
+    def alusta(self, akkukapasiteetti):
         self.akkukapasiteetti = akkukapasiteetti
 
 class Polttomoottoriauto(Auto):
-    def __init__(self, rekisterinumero, huippunopeus, bensatankki):
-        super().__init__(rekisterinumero, huippunopeus)
-        self.bensatankki = bensatankki
+    def __init__(self, rekisteritunnus, huippunopeus, bensatankin_koko):
+        super().__init__(rekisteritunnus, huippunopeus)
+        self.bensatankin_koko = bensatankin_koko
 
-# Pääohjelma
-auto_sahko = Sahkoauto("ABC-15", 180, 52.5)
-auto_poltto = Polttomoottoriauto("ACD-123", 165, 32.3)
+    def alusta(self, bensatankin_koko):
+        self.bensatankin_koko = bensatankin_koko
 
-auto_sahko.ajamaan(180)
-print()
-auto_poltto.ajamaan(150)
+def main():
+    sähköauto = Sähköauto("ABC-15", 180, 52.5)
+    polttomoottoriauto = Polttomoottoriauto("ACD-123", 165, 32.3)
+
+    sähköauto.alusta(52.5)
+    polttomoottoriauto.alusta(32.3)
+
+    sähköauto.aja(3)
+    polttomoottoriauto.aja(3)
+
+    print(f"Sähköauton matkamittari: {sähköauto.matkamittari} km")
+    print(f"Polttomoottoriauton matkamittari: {polttomoottoriauto.matkamittari} km")
+
+if __name__ == "__main__":
+    main()

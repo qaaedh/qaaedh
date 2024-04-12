@@ -1,32 +1,53 @@
 class Hissi:
-    def __init__(self, hissi_numero):
-        self.hissi_numero = hissi_numero
-        self.kerros = 0
+    def __init__(self, alimmän_kerros, ylimmän_kerros):
+        self.alimmän_kerros = alimmän_kerros
+        self.ylimmän_kerros = ylimmän_kerros
+        self.nykyinen = alimmän_kerros
 
-    def aja_ylos(self):
-        self.kerros += 1
+    def siirtokerros(self, siirto_kerros):
+        if siirto_kerros < self.alimmän_kerros:
+            siirto_kerros = self.alimmän_kerros
+        elif siirto_kerros > self.ylimmän_kerros:
+            siirto_kerros = self.ylimmän_kerros
 
-    def aja_alas(self):
-        self.kerros -= 1
+        elif siirto_kerros == self.nykyinen:
+            return
+
+
+        while self.nykyinen > siirto_kerros:
+            self.alaskerros()
+        while self.nykyinen < siirto_kerros:
+            self.yläkerros()
+        print(f"Hissi siirtyi kerrokseen {self.nykyinen}")
+
+
+    def alaskerros(self):
+        if self.nykyinen > self.alimmän_kerros:
+           self.nykyinen -= 1
+           print(f'Hissi siirtyi kerrokseen {self.nykyinen}')
+    def yläkerros(self):
+        if self.nykyinen < self.ylimmän_kerros:
+           self.nykyinen += 1
+           print(f'Hissi siirtyi kerrokseen {self.nykyinen}')
 
 class Talo:
-    def __init__(self, alin_kerroks, ylim_kerroks, hissien_lukumaara):
-        self.hisset = []
-        for i in range(hissien_lukumaara):
-            self.hisset.append(Hissi(i))
-        self.alin_kerroks = alin_kerroks
-        self.ylim_kerroks = ylim_kerroks
+    def __init__(self, alimmän_kerros, ylimmän_kerros, hissi_lukumäärä):
+        self.alimmän = alimmän_kerros
+        self.ylimmän = ylimmän_kerros
+        self.hissit = [Hissi(alimmän_kerros, ylimmän_kerros) for _ in range(hissi_lukumäärä)]
 
-    def aja_hissiä(self, hissi_numero, kohde_kerros):
-        hissi = self.hisset[hissi_numero]
-        while hissi.kerros != kohde_kerros:
-            if hissi.kerros < kohde_kerros:
-                hissi.aja_ylos()
-            else:
-                hissi.aja_alas()
+    def aja_hissiä(self, hissin_num, kohdekerros):
+        if 0 <= hissin_num < len(self.hissit):
+            hissi = self.hissit[hissin_num]
+            hissi.siirtokerros(kohdekerros)
+        else:
+            print(f"Hissiä numero {hissin_num} ei löydy talosta")
 
-talon_hisseilla = Talo(0, 10, 2)
-#talon_hisseilla.ajaiset_hissiä(0, 5)
-#talon_hisseilla.ajaiset_hissiä(1, 3)
-print("Hissi 0 on nyt kerroksessa", talon_hisseilla.hisset[0].kerros)
-print("Hissi 1 on nyt kerroksessa", talon_hisseilla.hisset[1].kerros)
+
+if __name__ == "__main__":
+    talo = Talo(1, 10, 3)
+
+    print("Talo on luotu ja siinä on 3 hissiä.")
+    talo.aja_hissiä(0, 5)
+    talo.aja_hissiä(1, 3)
+    talo.aja_hissiä(2, 8)
